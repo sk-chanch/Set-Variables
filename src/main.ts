@@ -25,7 +25,7 @@ async function run(): Promise<void> {
     })
 
     const response = await octokit.request(
-      `PATCH repos/${owner}/${repo}/actions/variables/${varName}`,
+      `POST repos/${owner}/${repo}/actions/variables/${varName}`,
       {
         owner: owner,
         repo: repo,
@@ -37,6 +37,7 @@ async function run(): Promise<void> {
       }
     )
 
+   
     // Access the desired information from the response object
     const {status, data} = response
     core.info(`Status: ${status}`)
