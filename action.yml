@@ -1,11 +1,35 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Set Github Variables'
+description: 'Use for set github variables'
+author: MK
 inputs:
-  milliseconds: # change this
+  owner:  # id of input
+    description: 'The account owner of the repository. The name is not case sensitive.'
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    default: ''
+  repo:  # id of input
+    description: 'The name of the repository without the .git extension. The name is not case sensitive.'
+    required: true
+    default: ''
+  name:  # id of input
+    description: 'The name of the variable.'
+    required: true
+    default: ''
+  value:
+    description: 'The value of the variable.'
+    required: true
+    default: ''
+  auth:
+    description: 'Your github token'
+    required: true
+    default: ''
+
+
+
+outputs:
+  result: # output will be available to future steps
+    description: 'result of api'
+
+    
 runs:
   using: 'node16'
   main: 'dist/index.js'
