@@ -26,14 +26,12 @@ async function run(): Promise<void> {
       auth: token
     })
 
-    const response = await octokit.request(`${path}/repos/${owner}/${repo}/actions/variables/${varName}`, {
+    const response = await octokit.request(`${path}/repos/${owner}/${repo}/actions/variables/${varName}`, 
+    {
       owner: owner,
       repo: repo,
       name: varName,
-      value: value,
-      headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
+      value: value
     })
 
 
