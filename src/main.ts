@@ -1,5 +1,4 @@
 import * as core from '@actions/core'
-import {wait} from './wait'
 import { Octokit, App } from "octokit";
 
 async function run(): Promise<void> {
