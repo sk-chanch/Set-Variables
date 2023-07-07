@@ -1,16 +1,8 @@
 import * as core from '@actions/core'
-import {Octokit, App} from 'octokit'
+import { Octokit } from 'octokit'
 
 async function run(): Promise<void> {
   try {
-    // const ms: string = core.getInput('milliseconds')
-    // core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-
-    // core.debug(new Date().toTimeString())
-    // await wait(parseInt(ms, 10))
-    // core.debug(new Date().toTimeString())
-
-    // core.setOutput('time', new Date().toTimeString())
 
     const token: string = core.getInput('auth')
     const repo: string = core.getInput('repo')
@@ -24,26 +16,22 @@ async function run(): Promise<void> {
       auth: token
     })
 
-    const response = await octokit.request(
-      `POST repos/${owner}/${repo}/actions/variables/${varName}`,
-      {
-        owner: owner,
-        repo: repo,
-        name: varName,
-        value: value,
-        headers: {
-          'X-GitHub-Api-Version': '2022-11-28'
-        }
-      }
-    )
+    const response = await octokit.rest.actions.createRepoVariable({
+      owner: owner,
+      repo: repo,
+      name: varName,
+      value: value,
+    })
 
+  
    
     // Access the desired information from the response object
-    const {status, data} = response
-    core.info(`Status: ${status}`)
-    core.info(`Response data: ${JSON.stringify(data)}`)
+  
+    core.info(`Status: ${response.status}`)
+    core.info(`Response data: ${JSON.stringify(response.data)}`)
 
-    core.setOutput('result', status == 204)
+    core.setOutput('result', response.status)
+
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
