@@ -3,14 +3,6 @@ import {Octokit, App} from 'octokit'
 
 async function run(): Promise<void> {
   try {
-    // const ms: string = core.getInput('milliseconds')
-    // core.debug(`Waiting ${ms} milliseconds ...`) // debug is only output if you set the secret `ACTIONS_STEP_DEBUG` to true
-
-    // core.debug(new Date().toTimeString())
-    // await wait(parseInt(ms, 10))
-    // core.debug(new Date().toTimeString())
-
-    // core.setOutput('time', new Date().toTimeString())
 
     const token: string = core.getInput('auth')
     const repo: string = core.getInput('repo')
@@ -44,6 +36,7 @@ async function run(): Promise<void> {
     core.info(`Response data: ${JSON.stringify(data)}`)
 
     core.setOutput('result', status == 204)
+    
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)
   }
