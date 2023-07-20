@@ -27,9 +27,9 @@ async function run(): Promise<void> {
     response = await octokit.request(
       "POST /repos/{owner}/{repo}/actions/variables",
       {
-        name: varName,
         owner: owner,
         repo: repo,
+        name: varName,
         value: value,
         headers: {
           'X-GitHub-Api-Version': '2022-11-28'
@@ -47,7 +47,7 @@ async function run(): Promise<void> {
     core.setOutput('result', response.status)
 
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error)
+    if (error instanceof Error) core.setFailed(`error with status code: ${response?.status.toString() ?? "-1"}`)
   }
 }
 
