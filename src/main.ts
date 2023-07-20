@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { Octokit } from '@octokit/rest'
+import { Octokit } from '@octokit/core'
 
 
 
@@ -17,10 +17,14 @@ const octokit = new Octokit({
 
 
 async function run(): Promise<void> {
+
+
+  let response
+
   try {
 
 
-    const response = await octokit.request(
+    response = await octokit.request(
       "POST /repos/{owner}/{repo}/actions/variables",
       {
         name: varName,
@@ -43,7 +47,7 @@ async function run(): Promise<void> {
     core.setOutput('result', response.status)
 
   } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error)
   }
 }
 
