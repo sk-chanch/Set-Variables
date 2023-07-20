@@ -8,7 +8,7 @@ const repo: string = core.getInput('repo')
 const varName: string = core.getInput('name')
 const value: string = core.getInput('value')
 const owner: string = core.getInput('owner')
-   
+
 // Octokit.js
 // https://github.com/octokit/core.js#readme
 const octokit = new Octokit({
@@ -19,18 +19,24 @@ const octokit = new Octokit({
 async function run(): Promise<void> {
   try {
 
-    
-    const response = await octokit.rest.actions.createRepoVariable({
-      name: varName,
-      owner: owner,
-      repo: repo,
-      value: value
-    })
 
-  
-   
+    const response = await octokit.request(
+      "POST /repos/{owner}/{repo}/actions/variables",
+      {
+        name: varName,
+        owner: owner,
+        repo: repo,
+        value: value,
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      }
+    )
+
+
+
     // Access the desired information from the response object
-  
+
     core.info(`Status: ${response.status}`)
     core.info(`Response data: ${JSON.stringify(response.data)}`)
 
